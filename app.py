@@ -57,3 +57,10 @@ async def get_readings(name: str):
 async def avg_temp():
     avg_temp = {"average_temperature" : round(average_temp(readings), 2)}
     return avg_temp
+
+@app.post("/devices", status_code=201)
+async def create_readings(reading:dict):
+    readings.append(reading)
+    return reading
+
+
