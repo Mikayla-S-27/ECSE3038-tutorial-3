@@ -28,10 +28,14 @@ def hottest(devices):
             max_temp = device["temp"]
     for device in devices:
         if device["temp"] == max_temp:
-            print(device)
+            return device
 
 hottest(readings)
 
 @app.get("/devices")
 async def get_devices():
     return readings
+
+@app.get("/devices/hottest")
+async def get_hottest_device():
+    return hottest(readings)
