@@ -39,3 +39,12 @@ async def get_devices():
 @app.get("/devices/hottest")
 async def get_hottest_device():
     return hottest(readings)
+
+
+@app.get("/devices/online")
+async def get_online():
+    online_list = []
+    for reading in readings:
+        if reading["online"] == True:
+            online_list.append(reading)
+    return online_list
