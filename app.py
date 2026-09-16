@@ -18,8 +18,6 @@ def average_temp(devices):
         count += 1
     return temp_sum / count
 
-print(average_temp(readings))
-
 
 def hottest(devices):
     max_temp = 0
@@ -29,8 +27,7 @@ def hottest(devices):
     for device in devices:
         if device["temp"] == max_temp:
             return device
-
-hottest(readings)
+        
 
 @app.get("/devices")
 async def get_devices():
@@ -39,7 +36,6 @@ async def get_devices():
 @app.get("/devices/hottest")
 async def get_hottest_device():
     return hottest(readings)
-
 
 @app.get("/devices/online")
 async def get_online():
@@ -56,3 +52,8 @@ async def get_readings(name: str):
                 return reading
     from fastapi import HTTPException
     raise HTTPException(status_code=404, detail="No device called " + name)
+
+@app.get("/stats")
+async def avg_temp():
+    avg_temp = {"average_temperature" : round(average_temp(readings), 2)}
+    return avg_temp
