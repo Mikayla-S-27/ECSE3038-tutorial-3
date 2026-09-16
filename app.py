@@ -48,3 +48,11 @@ async def get_online():
         if reading["online"] == True:
             online_list.append(reading)
     return online_list
+
+@app.get("/devices/{name}")
+async def get_readings(name: str):
+    for reading in readings:
+            if reading ["name"] == name:
+                return reading
+    from fastapi import HTTPException
+    raise HTTPException(status_code=404, detail="No device called " + name)
