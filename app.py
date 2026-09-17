@@ -63,4 +63,14 @@ async def create_readings(reading:dict):
     readings.append(reading)
     return reading
 
+@app.get("/rooms/{room}/devices")
+def by_room(room: str):
+    by_room_list = []
+    for reading in readings:
+        if reading["room"] == room:
+            by_room_list.append(reading)
+    if by_room_list == []:
+        from fastapi import HTTPException
+        raise HTTPException(status_code=404, detail="No room called " + room)
+    return by_room_list
 
